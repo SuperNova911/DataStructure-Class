@@ -74,13 +74,13 @@ int KarySearch(int A[], int k, int start, int end, int key)
 	for (int n = 1; n <= k; n++)
 	{
 		pivot1 = pivot2;
-		pivot2 = start + round((end - start) / (float)k * (float)n);
+		pivot2 = start + (int)round((end - start) / (float)k * (float)n);
 
 		if (A[pivot2] == key)
 		{
 			return pivot2;
 		}
-		else if (key < A[pivot2])
+		else if (key < A[pivot2]) 
 		{
 			return KarySearch(A, k, pivot1, pivot2 - 1, key);
 		}
