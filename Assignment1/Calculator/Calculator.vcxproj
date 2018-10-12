@@ -117,6 +117,10 @@
   <ItemGroup>
     <ClCompile Include="calculator.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GenericDoublyListP.h" />
+    <ClInclude Include="GenericStackDL.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
