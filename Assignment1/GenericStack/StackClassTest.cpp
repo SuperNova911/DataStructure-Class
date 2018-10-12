@@ -28,14 +28,14 @@ int main()
 	// stack_int = { 1 }
 
 	bool isEmpty = false;
-	isEmpty = stack_int.IsEmpty();		// stack_int: { 1 }				isEmpty = False;
-	isEmpty = stack_int2.IsEmpty();		// stack_int2: { }				isEmpty = True;
-	isEmpty = stack_int3.IsEmpty();		// stack_int3: { 4, 3, 2, 1 }	isEmpty = False;
+	isEmpty = stack_int.IsEmpty();		// stack_int: { 1 }				isEmpty: False
+	isEmpty = stack_int2.IsEmpty();		// stack_int2: { }				isEmpty: True
+	isEmpty = stack_int3.IsEmpty();		// stack_int3: { 4, 3, 2, 1 }	isEmpty: False
 
 	int stackSize = 0;
-	stackSize = stack_int.GetSize();	// stack_int: { 1 }				stackSize = 1;
-	stackSize = stack_int2.GetSize();	// stack_int2: { }				stackSize = 0;
-	stackSize = stack_int3.GetSize();	// stack_int3: { 4, 3, 2, 1 }	stackSize = 4;
+	stackSize = stack_int.GetSize();	// stack_int: { 1 }				stackSize: 1;
+	stackSize = stack_int2.GetSize();	// stack_int2: { }				stackSize: 0;
+	stackSize = stack_int3.GetSize();	// stack_int3: { 4, 3, 2, 1 }	stackSize: 4;
 
 
 
@@ -63,14 +63,14 @@ int main()
 	// stack_double = { 2.5 }
 
 	isEmpty = false;
-	isEmpty = stack_double.IsEmpty();		// stack_double: { 2.5 }					isEmpty = False;
-	isEmpty = stack_double2.IsEmpty();		// stack_double2: { }						isEmpty = True;
-	isEmpty = stack_double3.IsEmpty();		// stack_double3: { 10.0, 7.5, 5.0, 2.5 }	isEmpty = False;
+	isEmpty = stack_double.IsEmpty();		// stack_double: { 2.5 }					isEmpty: False
+	isEmpty = stack_double2.IsEmpty();		// stack_double2: { }						isEmpty: True
+	isEmpty = stack_double3.IsEmpty();		// stack_double3: { 10.0, 7.5, 5.0, 2.5 }	isEmpty: False
 
 	stackSize = 0;
-	stackSize = stack_double.GetSize();		// stack_double: { 2.5 }					stackSize = 1;
-	stackSize = stack_double2.GetSize();	// stack_double2: { }						stackSize = 0;
-	stackSize = stack_double3.GetSize();	// stack_double3: { 10.0, 7.5, 5.0, 2.5 }	stackSize = 4;
+	stackSize = stack_double.GetSize();		// stack_double: { 2.5 }					stackSize: 1;
+	stackSize = stack_double2.GetSize();	// stack_double2: { }						stackSize: 0;
+	stackSize = stack_double3.GetSize();	// stack_double3: { 10.0, 7.5, 5.0, 2.5 }	stackSize: 4;
 
 
 
@@ -98,14 +98,14 @@ int main()
 	// stack_string = { Aa }
 
 	isEmpty = false;
-	isEmpty = stack_string.IsEmpty();		// stack_string: { Aa }					isEmpty = False;
-	isEmpty = stack_string2.IsEmpty();		// stack_string2: { }					isEmpty = True;
-	isEmpty = stack_string3.IsEmpty();		// stack_string3: { Dd, Cc, Bb, Aa }	isEmpty = False;
+	isEmpty = stack_string.IsEmpty();		// stack_string: { Aa }					isEmpty: False
+	isEmpty = stack_string2.IsEmpty();		// stack_string2: { }					isEmpty: True
+	isEmpty = stack_string3.IsEmpty();		// stack_string3: { Dd, Cc, Bb, Aa }	isEmpty: False
 
 	stackSize = 0;
-	stackSize = stack_string.GetSize();		// stack_string: { Aa }					stackSize = 1;
-	stackSize = stack_string2.GetSize();	// stack_string2: { }					stackSize = 0;
-	stackSize = stack_string3.GetSize();	// stack_string3: { Dd, Cc, Bb, Aa }	stackSize = 4;
+	stackSize = stack_string.GetSize();		// stack_string: { Aa }					stackSize: 1;
+	stackSize = stack_string2.GetSize();	// stack_string2: { }					stackSize: 0;
+	stackSize = stack_string3.GetSize();	// stack_string3: { Dd, Cc, Bb, Aa }	stackSize: 4;
 
 	return 0;
 }

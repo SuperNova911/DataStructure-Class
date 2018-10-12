@@ -118,6 +118,7 @@
     <ClCompile Include="QueueClassTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GenericDoublyListP.h" />
     <ClInclude Include="GenericQueueDL.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
