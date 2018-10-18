@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
-#include "GenericStack.h"
+#include "GenericStackDL.h"
 #include "GenericDoublyListP.h"
 
 #define MAX_GRAPH_SIZE 256
@@ -17,14 +17,14 @@ void DFS(const int graph[MAX_GRAPH_SIZE][BRANCH_NUM], int row, int column, int s
 
 int main()
 {
-	char fileName[] = "sample_graph2.txt";
+	char fileName[] = "sample_graph3.txt";
 	FILE *stream;
 	if (fopen_s(&stream, fileName, "r") != 0)
 	{
 		cout << "파일을 열 수 없습니다. FileName: " << fileName << endl;
 		return 0;
 	}
-	
+
 	int graph[MAX_GRAPH_SIZE][BRANCH_NUM];
 	for (int i = 0; i < MAX_GRAPH_SIZE; i++)
 		for (int j = 0; j < BRANCH_NUM; j++)
@@ -35,7 +35,7 @@ int main()
 	while (fgets(buffer, sizeof(buffer), stream) != NULL)
 	{
 		vector<string> elements = Split(buffer, ' ');
-		
+
 		node = stoi(elements[0]);
 		for (int index = 1; index <= BRANCH_NUM && index < elements.size(); index++)
 		{
@@ -43,7 +43,7 @@ int main()
 		}
 	}
 	fclose(stream);
-	
+
 	int start, end;
 	while (true)
 	{

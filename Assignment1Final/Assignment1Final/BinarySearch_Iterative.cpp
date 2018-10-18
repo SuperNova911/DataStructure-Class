@@ -13,7 +13,7 @@ int main()
 	char *item, *context;
 	int index = 0;
 	int list[MAX_LIST] = { 0 };
-	
+
 	FILE *stream;
 	if (fopen_s(&stream, fileName, "r") != 0)
 	{
@@ -37,54 +37,44 @@ int main()
 	fclose(stream);
 
 	int key = 0;
-	//cout << "검색 할 숫자: ";
-	//cin >> key;
+	cout << "검색 할 숫자: ";
+	cin >> key;
 
 	int binarySearchResult = BinarySearch(list, 0, index - 1, key);
 
-	/*if (binarySearchResult == -1)
+	if (binarySearchResult == -1)
 	{
 		cout << key << "의 값이 존재하지 않음" << endl;
 	}
 	else
 	{
 		cout << key << "의 인덱스: " << binarySearchResult << endl;
-	}*/
-
-	for (int i = 50; i < 100; i++)
-	{
-		printf("검색 할 숫자: %d\n", i);
-		binarySearchResult = BinarySearch(list, 0, index - 1, i);
-		if (binarySearchResult == -1)
-		{
-			cout << i << "의 값이 존재하지 않음" << endl;
-		}
-		else
-		{
-			cout << i << "의 인덱스: " << binarySearchResult << endl;
-		}
 	}
 
- 	return 0;
+	return 0;
 }
 
 int BinarySearch(int A[], int start, int end, int key)
 {
-	if (start > end)
-		return -1;
+	int mid = 0;
 
-	int mid = (start + end) / 2;
+	while (start <= end)
+	{
+		mid = (start + end) / 2;
 
-	if (A[mid] > key)
-	{
-		return BinarySearch(A, start, mid - 1, key);
+		if (A[mid] > key)
+		{
+			end = mid - 1;
+		}
+		else if (A[mid] < key)
+		{
+			start = mid + 1;
+		}
+		else
+		{
+			return mid;
+		}
 	}
-	else if (A[mid] < key)
-	{
-		return BinarySearch(A, mid + 1, end, key);
-	}
-	else
-	{
-		return mid;
-	}
+
+	return -1;
 }

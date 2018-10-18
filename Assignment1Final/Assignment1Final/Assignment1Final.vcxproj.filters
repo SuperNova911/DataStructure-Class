@@ -15,21 +15,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DFS.cpp">
+    <ClInclude Include="GenericDoublyListP.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericStackDL.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericQueueDL.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Calculator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GenericStack.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GenericDoublyListP.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="sample_graph.txt" />
-    <Text Include="sample_graph2.txt" />
-    <Text Include="sample_graph3.txt" />
+    <Text Include="sample_graph.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="sample_graph2.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="sample_graph3.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
   </ItemGroup>
 </Project>

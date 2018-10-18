@@ -91,7 +91,7 @@ public class DoublylinkedList
 	
 	public int Retrieve(int position)
 	{
-		if (position < 0 || count < position)
+		if (position < 0 || count - 1 < position)
 			return -1;
 		
 		Node targetNode = head.Next;
