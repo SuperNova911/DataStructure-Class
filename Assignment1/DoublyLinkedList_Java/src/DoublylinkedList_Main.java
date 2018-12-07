@@ -2,27 +2,27 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		DoublylinkedList list = new DoublylinkedList();				// »ı¼ºÀÚ
-		DoublylinkedList list2 = new DoublylinkedList(list);		// ºñ¾îÀÖ´Â ¸®½ºÆ® º¹»ç
-		// list = { }, list2 = { }
+		DoublylinkedList list = new DoublylinkedList();				// ìƒì„±ì
+		DoublylinkedList list2 = new DoublylinkedList(list);		// ë¹„ì–´ìˆëŠ” ë¦¬ìŠ¤íŠ¸ ë³µì‚¬
+		// list: { }, list2: { }
 
-		list.Insert(0, 2);			// ¸Ç Ã³À½ (ºñ¾îÀÖ´Â »óÅÂ)
-		list.Insert(1, 4);			// ¸Ç ³¡
-		list.Insert(0, 1);			// ¸Ç Ã³À½ (°ªÀÌ ÀÖ´Â »óÅÂ)
-		list.Insert(2, 3);			// Áß°£ (¾Õ µÚ·Î °ªÀÌ ÀÖ´Â »óÅÂ)
-		// list = { 1, 2, 3, 4 }
+		list.Insert(0, 2);			// ë§¨ ì²˜ìŒ (ë¹„ì–´ìˆëŠ” ìƒíƒœ)
+		list.Insert(1, 4);			// ë§¨ ë
+		list.Insert(0, 1);			// ë§¨ ì²˜ìŒ (ê°’ì´ ìˆëŠ” ìƒíƒœ)
+		list.Insert(2, 3);			// ì¤‘ê°„ (ì• ë’¤ë¡œ ê°’ì´ ìˆëŠ” ìƒíƒœ)
+		// list: { 1, 2, 3, 4 }
 		
-		DoublylinkedList list3 = new DoublylinkedList(list);		// °ªÀÌ µé¾îÀÖ´Â ¸®½ºÆ® º¹»ç
-		// list3 = { 1, 2, 3, 4 }
+		DoublylinkedList list3 = new DoublylinkedList(list);		// ê°’ì´ ë“¤ì–´ìˆëŠ” ë¦¬ìŠ¤íŠ¸ ë³µì‚¬
+		// list3: { 1, 2, 3, 4 }
 
 		int data = 0;
-		data = list.Retrieve(0);		// ¸Ç Ã³À½ data: 1
-		data = list.Retrieve(1);		// Áß°£ °ª data: 2
-		data = list.Retrieve(3);		// ¸Ç ³¡   data: 4
+		data = list.Retrieve(0);		// ë§¨ ì²˜ìŒ data: 1
+		data = list.Retrieve(1);		// ì¤‘ê°„ ê°’ data: 2
+		data = list.Retrieve(3);		// ë§¨ ë   data: 4
 
-		list.Delete(0);			// ¸Ç Ã³À½ »èÁ¦
-		list.Delete(1);			// Áß°£ °ª »èÁ¦
-		list.Delete(1);			// ¸Ç ³¡ »èÁ¦
+		list.Delete(0);			// ë§¨ ì²˜ìŒ ì‚­ì œ
+		list.Delete(1);			// ì¤‘ê°„ ê°’ ì‚­ì œ
+		list.Delete(1);			// ë§¨ ë ì‚­ì œ
 		// list = { 2 }
 		
 		boolean isEmpty = false;
