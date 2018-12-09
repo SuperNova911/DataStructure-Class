@@ -29,7 +29,7 @@
     <ClCompile Include="BST.cpp" />
     <ClCompile Include="Hash.cpp" />
     <ClCompile Include="Heap.cpp" />
-    <ClCompile Include="test_BST.cpp" />
+    <ClCompile Include="test_shellsort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Dickens_Oliver_1839.tokens.txt" />

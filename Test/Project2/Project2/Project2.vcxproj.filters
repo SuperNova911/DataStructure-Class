@@ -41,7 +41,7 @@
     <ClCompile Include="Heap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="test_BST.cpp">
+    <ClCompile Include="test_shellsort.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
