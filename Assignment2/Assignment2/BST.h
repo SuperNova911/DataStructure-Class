@@ -3,22 +3,22 @@
 
 using namespace std;
 
-typedef struct dataRecord
+typedef struct dataTreeRecord
 {
 	string Key;
 	int count;
-} dataType;
+} dataTreeType;
 
 typedef struct nodeTreeRecord
 {
-	dataType Data;
+	dataTreeType Data;
 	struct nodeTreeRecord* LChild;
 	struct nodeTreeRecord* RChild;
-} node;
+} treeNode;
 
-typedef node* Nptr;
+typedef treeNode* TreeNptr;
 
-Nptr Search(Nptr T, const char *key);
-Nptr Insert(Nptr T, const char *key);
-void Delete(Nptr &T, const char *key);
-void Update(Nptr &T, const char *key);
+TreeNptr Search(TreeNptr T, const char *key);
+TreeNptr Insert(TreeNptr T, const char *key);
+void Delete(TreeNptr &T, const char *key);
+void Update(TreeNptr &T, const char *key);

@@ -1,25 +1,25 @@
 #include "BST.h"
 
-void SuccessorCopy(Nptr &T, dataType &nodeData)
+void SuccessorCopy(TreeNptr &T, dataTreeType &treeNodeData)
 {
 	if (T->LChild == NULL)
 	{
-		nodeData.Key = T->Data.Key;
-		Nptr temp = T;
+		treeNodeData.Key = T->Data.Key;
+		TreeNptr temp = T;
 		T = T->RChild;
 		delete temp;
 	}
 	else
 	{
-		SuccessorCopy(T->LChild, nodeData);
+		SuccessorCopy(T->LChild, treeNodeData);
 	}
 }
 
-Nptr Search(Nptr T, const char *key)
+TreeNptr Search(TreeNptr T, const char *key)
 {
 	if (T == NULL)
 	{
-		printf("No such node\n");
+		printf("No such treeNode\n");
 		return NULL;
 	}
 	else if (T->Data.Key == key)
@@ -30,11 +30,11 @@ Nptr Search(Nptr T, const char *key)
 		return Search(T->RChild, key);
 }
 
-Nptr Insert(Nptr T, const char *key)
+TreeNptr Insert(TreeNptr T, const char *key)
 {
 	if (T == NULL)
 	{
-		T = new node;
+		T = new treeNode;
 		T->Data.Key = key;
 		T->Data.count = 1;
 		T->LChild = NULL;
@@ -52,7 +52,7 @@ Nptr Insert(Nptr T, const char *key)
 	return T;
 }
 
-void Delete(Nptr &T, const char *key)
+void Delete(TreeNptr &T, const char *key)
 {
 	if (T == NULL)
 	{
@@ -70,19 +70,19 @@ void Delete(Nptr &T, const char *key)
 	{
 		if (T->LChild == NULL && T->RChild == NULL)
 		{
-			Nptr temp = T;
+			TreeNptr temp = T;
 			T = NULL;
 			delete temp;
 		}
 		else if (T->LChild == NULL)
 		{
-			Nptr temp = T;
+			TreeNptr temp = T;
 			T = T->RChild;
 			delete temp;
 		}
 		else if (T->RChild == NULL)
 		{
-			Nptr temp = T;
+			TreeNptr temp = T;
 			T = T->LChild;
 			delete temp;
 		}
@@ -93,11 +93,11 @@ void Delete(Nptr &T, const char *key)
 	}
 }
 
-void Update(Nptr &T, const char *key)
+void Update(TreeNptr &T, const char *key)
 {
 	if (T == NULL)
 	{
-		T = new node;
+		T = new treeNode;
 		T->Data.Key = key;
 		T->Data.count = 1;
 		T->LChild = NULL;

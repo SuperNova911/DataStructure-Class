@@ -24,6 +24,9 @@
     <ClInclude Include="..\..\..\Assignment2\Assignment2\shellsort.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Heap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BST.cpp">
@@ -35,7 +38,10 @@
     <ClCompile Include="..\..\..\Assignment2\Assignment2\shellsort.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="radio_sort.cpp">
+    <ClCompile Include="Heap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="test_BST.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

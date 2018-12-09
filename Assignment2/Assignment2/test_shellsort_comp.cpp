@@ -26,8 +26,8 @@ int main(int argc, char **argv)
 	srand((size_t)time(NULL));
 
 	N = 1000000;
-	data = (int *)malloc(sizeof(int) * N);
-	dataOrigin = (int *)malloc(sizeof(int) * N);
+	data = new int[N];
+	dataOrigin = new int[N];
 
 	for (int index = 0; index < N; index++)
 		dataOrigin[index] = rand();
@@ -44,5 +44,7 @@ int main(int argc, char **argv)
 		}
 	}
 
+	delete[] data;
+	delete[] dataOrigin;
 	return 0;
 }

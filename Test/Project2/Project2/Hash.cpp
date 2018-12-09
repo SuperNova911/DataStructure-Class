@@ -29,12 +29,7 @@ void Hash::Create(int tableSize)
 
 int Hash::Insert(const char * key)
 {
-	int hashValue = strHashFunc(key);
-	while (hashValue < 0)
-	{
-		hashValue += size;
-	}
-	hashValue %= size;
+	int hashValue = (strHashFunc(key) % size + size) % size;
 
 	Nptr targetNode = table[hashValue];
 	while (true)
@@ -68,12 +63,7 @@ int Hash::Insert(const char * key)
 
 Nptr Hash::Search(const char * key)
 {
-	int hashValue = strHashFunc(key);
-	while (hashValue < 0)
-	{
-		hashValue += size;
-	}
-	hashValue %= size;
+	int hashValue = (strHashFunc(key) % size + size) % size;
 
 	Nptr targetNode = table[hashValue];
 	while (targetNode != NULL)
@@ -89,12 +79,7 @@ Nptr Hash::Search(const char * key)
 
 void Hash::Update(const char * key)
 {
-	int hashValue = strHashFunc(key);
-	while (hashValue < 0)
-	{
-		hashValue += size;
-	}
-	hashValue %= size;
+	int hashValue = (strHashFunc(key) % size + size) % size;
 
 	if (table[hashValue]->Data.Key.empty())
 	{
@@ -136,12 +121,7 @@ void Hash::Update(const char * key)
 
 void Hash::Delete(const char * key)
 {
-	int hashValue = strHashFunc(key);
-	while (hashValue < 0)
-	{
-		hashValue += size;
-	}
-	hashValue %= size;
+	int hashValue = (strHashFunc(key) % size + size) % size;
 
 	Nptr targetNode = table[hashValue];
 	while (targetNode != NULL)
@@ -159,8 +139,8 @@ void Hash::Delete(const char * key)
 			}
 			else
 			{
-				delete targetNode;
-				targetNode = NULL;
+				targetNode->Data.Key.clear();
+				targetNode->Data.count = 0;
 			}
 			return;
 		}
@@ -286,12 +266,7 @@ void Hash::Rehash(int newTableSize)
 		targetNode = table[index];
 		while (targetNode != NULL)
 		{
-			hashValue = strHashFunc(targetNode->Data.Key.c_str());
-			while (hashValue < 0)
-			{
-				hashValue += newTableSize;
-			}
-			hashValue %= newTableSize;
+			hashValue = (strHashFunc(targetNode->Data.Key.c_str()) % newTableSize + newTableSize) % newTableSize;
 
 			newTableNode = newTable[hashValue];
 			while (true)

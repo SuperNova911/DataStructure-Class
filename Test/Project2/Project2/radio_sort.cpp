@@ -58,6 +58,56 @@ void countingsort(string list[], int size, int k)
 	delete[] c;
 }
 
+void countingsort2(string list[], int size, int k)
+{
+	string *table = new string[size];
+	int *c = new int['z' - 'a' + 2];
+	memset(c, 0, sizeof(int) * ('z' - 'a' + 2));
+
+	int position;
+	for (int index = 0; index < size; index++)
+	{
+		if (list[index].size() < k + 1)
+		{
+			position = 0;
+		}
+		else
+		{
+			position = list[index][k] - 'a' + 1;
+		}
+
+		c[position]++;
+	}
+
+	for (int index = 1; index < 'z' - 'a' + 2; index++)
+	{
+		c[index] += c[index - 1];
+	}
+
+	for (int index = size - 1; index >= 0; index--)
+	{
+		if (list[index].size() < k + 1)
+		{
+			position = 0;
+		}
+		else
+		{
+			position = list[index][k] - 'a' +1;
+		}
+
+		table[c[position] - 1] = list[index];
+		c[position]--;
+	}
+
+	for (int index = 0; index < size; index++)
+	{
+		list[index] = table[index];
+	}
+
+	delete[] table;
+	delete[] c;
+}
+
 void radixSort(string list[], int size)
 {
 	int max = list[0].size();
@@ -72,6 +122,23 @@ void radixSort(string list[], int size)
 	for (int k = max; k > 0; k--)
 	{
 		countingsort(list, size, k - 1);
+	}
+}
+
+void radixSort2(string list[], int size)
+{
+	int max = list[0].size();
+	for (int index = 0; index < size; index++)
+	{
+		if (list[index].size() > max)
+		{
+			max = list[index].size();
+		}
+	}
+
+	for (int k = 0; k < max; k++)
+	{
+		countingsort2(list, size, k);
 	}
 }
 
@@ -107,7 +174,7 @@ int main()
 	}
 	fclose(file);
 
-	radixSort(tokenList, lineNumber);
+	radixSort2(tokenList, lineNumber);
 
 	remove(OUTPUT);
 	file = fopen(OUTPUT, "w");
