@@ -13,8 +13,9 @@ OBJECT10 = Hash_BST_comp.o Hash.o BST.o
 OBJECT11 = heap_sort.o Heap.o
 OBJECT12 = test_Hash.o Hash.o
 OBJECT13 = test_BST.o BST.o
+OBJECT14 = Hash_word_count.o Hash.o
 
-all : test_shellsort test_shellsort_comp test_shellsort_sedgewick test_sort_comp test_countingsort BST_word_count BST_word_count_test Hash_word_count_test token_generator Hash_BST_comp heap_sort test_Hash test_BST
+all : test_shellsort test_shellsort_comp test_shellsort_sedgewick test_sort_comp test_countingsort BST_word_count BST_word_count_test Hash_word_count_test token_generator Hash_BST_comp heap_sort test_Hash test_BST Hash_word_count
 
 test_shellsort : $(OBJECT1)
 	$(CC) -o test_shellsort $(OBJECT1) $(CFLAGS)
@@ -54,3 +55,6 @@ test_Hash : $(OBJECT12)
 
 test_BST : $(OBJECT13)
 	$(CC) -o test_BST $(OBJECT13) $(CFLAGS)
+
+Hash_word_count : $(OBJECT14)
+	$(CC) -o Hash_word_count $(OBJECT14) $(CFLAGS)

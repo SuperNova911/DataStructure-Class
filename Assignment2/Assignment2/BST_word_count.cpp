@@ -20,8 +20,9 @@ int main()
 		return 0;
 	}
 
-	Nptr poemTree = NULL;
+	TreeNptr poemTree = NULL;
 
+	printf("'%s' word count 계산 중...\n", poem);
 	char *word;
 	char buffer[512];
 	while (fgets(buffer, sizeof(buffer), file) != NULL)
@@ -49,8 +50,9 @@ int main()
 		return 0;
 	}
 
-	stack<Nptr> nodeStack;
-	Nptr currentNode;
+	printf("계산 결과를 '%s'에 저장 중...\n", poemOutput);
+	stack<TreeNptr> nodeStack;
+	TreeNptr currentNode;
 	currentNode = poemTree;
 	while (true)
 	{
@@ -83,8 +85,9 @@ int main()
 		return 0;
 	}
 
-	Nptr novelTree = NULL;
+	TreeNptr novelTree = NULL;
 
+	printf("'%s' word count 계산 중...\n", novel);
 	while (fgets(buffer, sizeof(buffer), file) != NULL)
 	{
 		if (buffer[strlen(buffer) - 1] == '\n')
@@ -110,6 +113,7 @@ int main()
 		return 0;
 	}
 
+	printf("계산 결과를 '%s'에 저장 중...\n", novelOutput);
 	currentNode = novelTree;
 	while (true)
 	{
@@ -134,4 +138,7 @@ int main()
 		}
 	}
 	fclose(file);
+	
+	cout << "프로그램 종료" << endl;
+	return 0;
 }

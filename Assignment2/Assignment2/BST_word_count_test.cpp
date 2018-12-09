@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	}
 	fclose(file);
 
-	dataType *data = new dataType[lineNumber];	
+	dataTreeType *data = new dataTreeType[lineNumber];	
 
 	file = fopen(argv[1], "r");
 	for (int index = 0; fgets(buffer, sizeof(buffer), file) != NULL; index++)

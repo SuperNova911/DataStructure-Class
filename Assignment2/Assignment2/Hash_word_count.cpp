@@ -78,30 +78,5 @@ int main()
 	cout << "Saving " << novelOutput << endl;
 	novelHash.Save(novelOutput);
 
-
-	Hash hash;
-	hash.Create(hashTableSize);
-	cout << "Open " << novelOutput << endl;
-	hash.Open(novelOutput);
-
-	cout << "Loading is complete" << endl;
-
-	string userInput;
-	Nptr searchResult;
-	while (true)
-	{
-		cout << "input> ";
-		cin >> userInput;
-		fflush(stdin);
-
-		searchResult = hash.Search(userInput.c_str());
-		if (searchResult != NULL)
-		{
-			cout << searchResult->Data.count << endl;
-		}
-		else
-		{
-			cout << "Not found" << endl;
-		}
-	}
+    return 0;
 }

@@ -112,6 +112,8 @@ int main()
 	}
 	fclose(file);
 
+	printf("입력파일 '%s'에 대한 랜덤 token 생성 결과가 '%s'에 저장되었습니다\n", tableName, outputName);
+
 	free(table);
 	return 0;
 }
