@@ -1,6 +1,8 @@
 package Navigator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Stack;
 
 public class Dijkstra
 {
@@ -11,14 +13,30 @@ public class Dijkstra
 	{
 		Initialize();
 		
-		int intersectionNumber = intersectionPointList.size();
 		IntersectionPointList = intersectionPointList;
+		int intersectionNumber = IntersectionPointList.size();
 		IntersectionTable = new double[intersectionNumber][intersectionNumber];
+		
+		for (double[] row: IntersectionTable)
+		    Arrays.fill(row, Double.MAX_VALUE);
+		
+		IntersectionPoint intersection;
 		for (int i = 0; i < intersectionNumber; i++)
 		{
+			intersection = IntersectionPointList.get(i);
+			
 			for (int j = 0; j < intersectionNumber; j++)
 			{
-				if (intersectionPointList.get(i).)
+				if (i == j)
+				{
+					IntersectionTable[i][j] = IntersectionTable[j][i] = 0;
+					continue;
+				}
+				
+				if (intersection.IsConnected(IntersectionPointList.get(j)))
+				{
+					IntersectionTable[i][j] = IntersectionTable[j][i] = intersection.GetDistance(IntersectionPointList.get(j));
+				}
 			}
 		}
 	}
@@ -28,59 +46,99 @@ public class Dijkstra
 		IntersectionPointList = new ArrayList<>();
 	}
 	
-	public void FindShortestPath(Point startPoint, Point endPoint)
+	public ArrayList<Point> FindShortestPath(Point startPoint, Point endPoint)
 	{
 		boolean[] hasVisited = new boolean[IntersectionPointList.size()];
 		double[] distance = new double[IntersectionPointList.size()];
+//		Point[] path = new Point[IntersectionPointList.size()];
+		int[] path = new int[IntersectionPointList.size()];
 		
-		for (double dis : distance)
-		{
-			dis = Double.MAX_VALUE;
-		}
+		Arrays.fill(hasVisited, false);
+		Arrays.fill(distance, Double.MAX_VALUE);
+//		Arrays.fill(path, null);
+		Arrays.fill(path, -1);
 		
-		IntersectionPoint startIntersectionPoint, endIntersectionPoint;
-		startIntersectionPoint = endIntersectionPoint = null;
-		
-		for (IntersectionPoint intersectionPoint : IntersectionPointList)
-		{
-			if (intersectionPoint.getX() == startPoint.getX() && intersectionPoint.getY() == startPoint.getY())
-			{
-				startIntersectionPoint = intersectionPoint;
-			}
-			
-			if (intersectionPoint.getX() == endPoint.getX() && intersectionPoint.getY() == endPoint.getY())
-			{
-				endIntersectionPoint = intersectionPoint;
-			}
-			
-			if (startIntersectionPoint != null && endIntersectionPoint != null)
-			{
-				break;
-			}
-		}
-		
-		if (startIntersectionPoint == null || endIntersectionPoint == null)
-		{
-			System.out.println("시작, 도착 지점을 찾지 못함");
-			return;
-		}
-		
-		int startIntersectionIndex = 0;
+		int startIntersectionIndex, endIntersectionIndex;
+		startIntersectionIndex = endIntersectionIndex = -1;
+				
 		for (int index = 0; index < IntersectionPointList.size(); index++)
-		{
-			if (IntersectionPointList.get(index).getX() == startPoint.getX() && IntersectionPointList.get(index).getY() == startPoint.getY())
+		{	
+			if (IntersectionPointList.get(index).IsEqualPoint(startPoint))
 			{
 				startIntersectionIndex = index;
+			}
+			
+			if (IntersectionPointList.get(index).IsEqualPoint(endPoint))
+			{
+				endIntersectionIndex = index;
+			}
+			
+			if (startIntersectionIndex != -1 && endIntersectionIndex != -1)
+			{
 				break;
 			}
 		}
 		
 		distance[startIntersectionIndex] = 0;
-		hasVisited[startIntersectionIndex] = true;
+//		hasVisited[startIntersectionIndex] = true;
 		
-		for (int index = 0; index < IntersectionPointList.size(); index++)
+		double bestDistance;
+		int bestWay = 0;
+		for (int i = 0; i < IntersectionPointList.size(); i++)
 		{
-			if (hasVisited[index] == false && IntersectionPointList.get(index).has)
+			bestDistance = Double.MAX_VALUE;
+			for (int j = 0; j < IntersectionPointList.size(); j++)
+			{
+				if (hasVisited[j] == false && distance[j] < bestDistance)
+				{
+					bestWay = j;
+					bestDistance = distance[j];
+				}
+			}
+			
+			hasVisited[bestWay] = true;
+			
+			if (distance[bestWay] == Double.MAX_VALUE)
+			{
+				break;
+			}
+			else
+			{
+				for (int j = 0; j < IntersectionPointList.size(); j++)
+				{
+					if (distance[j] > distance[bestWay] + IntersectionTable[bestWay][j])
+					{
+						distance[j] = distance[bestWay] + IntersectionTable[bestWay][j];
+//						path[j] = IntersectionPointList.get(bestWay);
+						path[j] = bestWay;
+					}
+				}
+			}
 		}
+		
+		ArrayList<Point> shortestPathList = new ArrayList<>();
+		Stack<Integer> stack = new Stack<>();
+		int pointer = endIntersectionIndex;
+		
+		while (true)
+		{
+			if (path[pointer] != -1 && startIntersectionIndex != endIntersectionIndex)
+			{
+				stack.push(pointer);
+				pointer = path[pointer];
+			}
+			else
+			{
+				stack.push(startIntersectionIndex);
+				break;
+			}
+		}
+		
+		while (stack.isEmpty() == false)
+		{
+			shortestPathList.add(IntersectionPointList.get(stack.pop()));
+		}
+		
+		return shortestPathList;
 	}
 }

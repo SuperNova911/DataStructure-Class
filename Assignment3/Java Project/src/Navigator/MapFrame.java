@@ -5,26 +5,24 @@ import java.util.ArrayList;
 public class MapFrame implements IMapSize
 {	
 	public ArrayList<Road> RoadList;
-//	public ArrayList<Point> IntersectionList;
 	public ArrayList<IntersectionPoint>IntersectionPointList;
 	public ArrayList<Point> ShortestPathList;
+	public ArrayList<Road> MSTList;
 	
 	public boolean IsValidStartPoint;
 	public boolean IsValidEndPoint;
-	public boolean IsValidShortestPathList;
+	public boolean ShowShortestPath;
+	public boolean ShowMST;
 	
 	public Point StartPoint;
 	public Point EndPoint;
 	
+	private int RandomRoadNumber;
+	
 	public MapFrame()
 	{
 		Initialize();
-		
-		int defaultRoadNumber = 6;
-		for (int index = 0; index < defaultRoadNumber; index++)
-		{
-			GenerateRandomRoad();
-		}
+		GenerateRandomRoad();
 	}
 	
 	private void Initialize()
@@ -32,14 +30,17 @@ public class MapFrame implements IMapSize
 		RoadList = new ArrayList<>();
 		IntersectionPointList = new ArrayList<>();
 		ShortestPathList = new ArrayList<>();
-//		IntersectionList = new ArrayList<>();
+		MSTList = new ArrayList<>();
 		
 		IsValidStartPoint = false;
 		IsValidEndPoint = false;
-		IsValidShortestPathList = false;
+		ShowShortestPath = false;
+		ShowMST = false;
 		
 		StartPoint = new Point(0, 0);
 		EndPoint = new Point(0, 0);
+		
+		RandomRoadNumber = 6;
 	}
 	
 	private void AddRoadToList(Road newRoad)
@@ -70,7 +71,9 @@ public class MapFrame implements IMapSize
 				
 				if (isIntersectionExist == false)
 				{
-					IntersectionPointList.add(new IntersectionPoint(intersection, road));
+					IntersectionPoint newIntersectionPoint = new IntersectionPoint(intersection, newRoad);
+					newIntersectionPoint.AddDestination(road);
+					IntersectionPointList.add(newIntersectionPoint);
 				}
 			}
 		}
@@ -80,9 +83,15 @@ public class MapFrame implements IMapSize
 
 	public void GenerateRandomRoad()
 	{
-		Road newRoad = new Road();
-		newRoad.GenerateRandomRoad();
-		AddRoadToList(newRoad);
+		RoadList.clear();
+		IntersectionPointList.clear();
+		
+		for (int index = 0; index < RandomRoadNumber; index++)
+		{
+			Road newRoad = new Road();
+			newRoad.GenerateRandomRoad();
+			AddRoadToList(newRoad);
+		}
 	}
 	
 	public void FindShortestPath()
@@ -117,17 +126,24 @@ public class MapFrame implements IMapSize
 				bestEndPoint = point;
 			}
 		}
-
-		ShortestPathList.add(bestStartPoint);
-		ShortestPathList.add(bestEndPoint);
-		
-		IsValidShortestPathList = true;
 		
 		if (bestStartPoint == bestEndPoint)
 		{
 			return;
 		}
 
-		
+		Dijkstra dijkstra = new Dijkstra(IntersectionPointList);
+
+		ShortestPathList.add(StartPoint);
+		ShortestPathList.addAll(dijkstra.FindShortestPath(bestStartPoint, bestEndPoint));
+		ShortestPathList.add(EndPoint);
+		ShowShortestPath = true;
+	}
+	
+	public void GetMST()
+	{
+		Prim prim = new Prim(IntersectionPointList);
+		MSTList = prim.GetMST();
+		ShowMST = true;
 	}
 }

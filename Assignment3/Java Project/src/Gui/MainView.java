@@ -2,11 +2,14 @@ package Gui;
 
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+
+import java.awt.BasicStroke;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
@@ -18,6 +21,7 @@ import Navigator.Road;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Font;
 
 public class MainView extends JFrame implements IMapSize
 {
@@ -52,9 +56,7 @@ public class MainView extends JFrame implements IMapSize
 	public MainView()
 	{
 		InitializeGUI();
-		
-		Initialize();	
-		DrawLine();
+		Initialize();
 	}
 	
 	private void InitializeGUI()
@@ -71,6 +73,7 @@ public class MainView extends JFrame implements IMapSize
 			public void paintComponent(Graphics g)
 			{
 				super.paintComponent(g);
+				Graphics2D g2 = (Graphics2D)g;
 				
 				// 도로 그리기
 				int x1, y1, x2, y2;
@@ -83,11 +86,31 @@ public class MainView extends JFrame implements IMapSize
 					g.drawLine(x1, y1, x2, y2);
 				}
 				
+				// 최단 경로 그리기
+				if (mapFrame.ShowShortestPath)
+				{
+					g2.setStroke(new BasicStroke(3));
+					g2.setColor(Color.RED);
+					for (int index = 0; index < mapFrame.ShortestPathList.size() - 1; index++)
+					{
+						g2.drawLine(mapFrame.ShortestPathList.get(index).getX() / (MAX_X / panel_map.getWidth()), 
+								mapFrame.ShortestPathList.get(index).getY() / (MAX_X / panel_map.getWidth()), 
+								mapFrame.ShortestPathList.get(index + 1).getX() / (MAX_X / panel_map.getWidth()), 
+								mapFrame.ShortestPathList.get(index + 1).getY() / (MAX_X / panel_map.getWidth()));
+					}
+				}
+				
+				if (mapFrame.ShowMST)
+				{
+					
+				}
+				
 				// 교차점 그리기
 				for (IntersectionPoint intersectionPoint : mapFrame.IntersectionPointList)
 				{
+					g.setColor(Color.BLACK);
 					g.fillOval(intersectionPoint.getX() / (MAX_X / panel_map.getWidth()) - 3,
-							intersectionPoint.getY() / (MAX_Y / panel_map.getHeight()) -3, 7, 7);
+							intersectionPoint.getY() / (MAX_Y / panel_map.getHeight()) -3, 6, 6);
 				}
 
 				// 시작, 도착 지점 그리기
@@ -103,17 +126,6 @@ public class MainView extends JFrame implements IMapSize
 					g.fillOval(mapFrame.EndPoint.getX() / (MAX_X / panel_map.getWidth()) - 5, 
 							mapFrame.EndPoint.getY() / (MAX_Y / panel_map.getHeight()) - 5, 10, 10);	
 				}
-				
-				// 최단 경로 그리기
-				if (mapFrame.IsValidShortestPathList)
-				{
-					g.setColor(Color.RED);
-					for (Point point : mapFrame.ShortestPathList)
-					{
-						g.fillOval(point.getX() / (MAX_X / panel_map.getWidth()) - 5, 
-								point.getY() / (MAX_X / panel_map.getWidth()) - 5, 10, 10);
-					}
-				}
 			}
 		};
 		panel_map.addMouseListener(new MouseAdapter() 
@@ -128,16 +140,14 @@ public class MainView extends JFrame implements IMapSize
 				if (arg0.getButton() == MouseEvent.BUTTON1)
 				{
 					mapFrame.StartPoint = new Point(x, y);
-					mapFrame.IsValidShortestPathList = false;
 					mapFrame.IsValidStartPoint = true;
-					System.out.println("x: " + x + ", y: " + y);
+					mapFrame.ShowShortestPath = false;
 				}
 				else if (arg0.getButton() == MouseEvent.BUTTON3)
 				{
 					mapFrame.EndPoint = new Point(x, y);
-					mapFrame.IsValidShortestPathList = false;
 					mapFrame.IsValidEndPoint = true;
-					System.out.println("x: " + x + ", y: " + y);
+					mapFrame.ShowShortestPath = false;
 				}
 				else
 				{
@@ -147,7 +157,7 @@ public class MainView extends JFrame implements IMapSize
 				panel_map.repaint();
 			}
 		});
-		panel_map.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_map.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		panel_map.setBackground(Color.WHITE);
 		panel_map.setBounds(12, 10, 500, 500);
 		contentPane.add(panel_map);
@@ -158,55 +168,67 @@ public class MainView extends JFrame implements IMapSize
 		panel_button.setLayout(null);
 		
 		btn_generateRandomRoad = new JButton("Generate Random Road");
+		btn_generateRandomRoad.setFont(new Font("Consolas", Font.BOLD, 15));
+		btn_generateRandomRoad.setBackground(Color.BLUE);
+		btn_generateRandomRoad.setForeground(Color.WHITE);
 		btn_generateRandomRoad.addMouseListener(new MouseAdapter() 
 		{
 			@Override
-			public void mouseClicked(MouseEvent arg0) 
+			public void mousePressed(MouseEvent arg0) 
 			{
 				mapFrame.GenerateRandomRoad();
-				mapFrame.IsValidShortestPathList = false;
 				mapFrame.IsValidStartPoint = false;
 				mapFrame.IsValidEndPoint = false;
+				mapFrame.ShowShortestPath = false;
+				mapFrame.ShowMST = false;
 				panel_map.repaint();
 			}
 		});
-		btn_generateRandomRoad.setBounds(12, 10, 205, 34);
+		btn_generateRandomRoad.setBounds(12, 10, 205, 50);
+		btn_generateRandomRoad.setFocusPainted(false);
 		panel_button.add(btn_generateRandomRoad);
 		
 		btn_findShortestPath = new JButton("Find Shortest Path");
+		btn_findShortestPath.setForeground(Color.WHITE);
+		btn_findShortestPath.setBackground(Color.BLUE);
+		btn_findShortestPath.setFont(new Font("Consolas", Font.BOLD, 15));
 		btn_findShortestPath.addMouseListener(new MouseAdapter() 
 		{
 			@Override
-			public void mouseClicked(MouseEvent e) 
+			public void mousePressed(MouseEvent e) 
 			{
+				mapFrame.ShowMST = false;
 				mapFrame.FindShortestPath();
 				panel_map.repaint();
 			}
 		});
-		btn_findShortestPath.setBounds(12, 54, 205, 34);
+		btn_findShortestPath.setBounds(12, 70, 205, 50);
+		btn_findShortestPath.setFocusPainted(false);
 		panel_button.add(btn_findShortestPath);
 		
 		btn_getMST = new JButton("Get MST");
+		btn_getMST.setFont(new Font("Consolas", Font.BOLD, 15));
+		btn_getMST.setBackground(Color.BLUE);
+		btn_getMST.setForeground(Color.WHITE);
 		btn_getMST.addMouseListener(new MouseAdapter() 
 		{
 			@Override
-			public void mouseClicked(MouseEvent e) 
+			public void mousePressed(MouseEvent e) 
 			{
-				
+				mapFrame.IsValidStartPoint = false;
+				mapFrame.IsValidEndPoint = false;
+				mapFrame.ShowShortestPath = false;
+				mapFrame.GetMST();
+				panel_map.repaint();
 			}
 		});
-		btn_getMST.setBounds(12, 98, 205, 34);
+		btn_getMST.setBounds(12, 130, 205, 50);
+		btn_getMST.setFocusPainted(false);
 		panel_button.add(btn_getMST);
 	}
 	
 	private void Initialize()
 	{
 		mapFrame = new MapFrame();
-		
-	}
-	
-	private void DrawLine()
-	{
-
 	}
 }

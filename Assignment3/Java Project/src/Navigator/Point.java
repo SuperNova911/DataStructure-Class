@@ -16,6 +16,11 @@ public class Point
 		return Math.sqrt(Math.pow(Math.abs(this.getX() - from.getX()), 2) + Math.pow(Math.abs(this.getY() - from.getY()), 2));
 	}
 	
+	public boolean IsEqualPoint(Point comparePoint)
+	{
+		return (this.getX() == comparePoint.getX() && this.getY() == comparePoint.getY());
+	}
+	
 	public int getX()
 	{
 		return X;

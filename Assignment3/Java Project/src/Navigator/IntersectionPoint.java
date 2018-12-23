@@ -24,16 +24,24 @@ public class IntersectionPoint extends Point
 		DestinationList.add(destination);
 	}
 	
-	public boolean IsEqualPoint(Point comparePoint)
-	{
-		return (super.getX() == comparePoint.getX() && super.getY() == comparePoint.getY());
-	}
-	
 	public boolean HasDestination(Road destination)
 	{
 		for (Road road : DestinationList)
 		{
 			if (road.equals(destination))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean IsConnected(IntersectionPoint otherPoint)
+	{
+		for (Road otherRoad : otherPoint.DestinationList)
+		{
+			if (this.HasDestination(otherRoad))
 			{
 				return true;
 			}

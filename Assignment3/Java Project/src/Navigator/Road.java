@@ -11,13 +11,14 @@ public class Road implements IMapSize
 	
 	public Road()
 	{
-		Initialize();	
+		this.Point1 = new Point(0, 0);
+		this.Point2 = new Point(0, 0);	
 	}
 	
-	private void Initialize()
+	public Road(Point point1, Point point2)
 	{
-		Point1 = new Point(0, 0);
-		Point2 = new Point(0, 0);
+		this.Point1 = point1;
+		this.Point2 = point2;
 	}
 	
 	public void GenerateRandomRoad()
