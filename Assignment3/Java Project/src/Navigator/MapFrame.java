@@ -17,7 +17,10 @@ public class MapFrame implements IMapSize
 	public Point StartPoint;
 	public Point EndPoint;
 	
-	private int RandomRoadNumber;
+	public double ShortestDistance;
+	public double MSTCost;
+	
+	public int RandomRoadNumber;
 	
 	public MapFrame()
 	{
@@ -40,7 +43,10 @@ public class MapFrame implements IMapSize
 		StartPoint = new Point(0, 0);
 		EndPoint = new Point(0, 0);
 		
-		RandomRoadNumber = 6;
+		ShortestDistance = 0;
+		MSTCost = 0;
+		
+		RandomRoadNumber = 50;
 	}
 	
 	private void AddRoadToList(Road newRoad)
@@ -61,7 +67,7 @@ public class MapFrame implements IMapSize
 			{
 				for (IntersectionPoint intersectionPoint : IntersectionPointList)
 				{
-					if (intersectionPoint.getX() == intersection.getX() && intersectionPoint.getY() == intersection.getY())
+					if (intersectionPoint.IsEqualPoint(intersection))
 					{
 						intersectionPoint.AddDestination(road);
 						isIntersectionExist = true;
@@ -86,6 +92,12 @@ public class MapFrame implements IMapSize
 		RoadList.clear();
 		IntersectionPointList.clear();
 		
+		ShortestPathList.clear();
+		MSTList.clear();
+		
+		ShortestDistance = 0;
+		MSTCost = 0;
+		
 		for (int index = 0; index < RandomRoadNumber; index++)
 		{
 			Road newRoad = new Road();
@@ -97,6 +109,7 @@ public class MapFrame implements IMapSize
 	public void FindShortestPath()
 	{
 		ShortestPathList.clear();
+		ShortestDistance = 0;
 		
 		if (IsValidStartPoint == false || IsValidEndPoint == false)
 		{
@@ -137,13 +150,28 @@ public class MapFrame implements IMapSize
 		ShortestPathList.add(StartPoint);
 		ShortestPathList.addAll(dijkstra.FindShortestPath(bestStartPoint, bestEndPoint));
 		ShortestPathList.add(EndPoint);
+		
+		for (int index = 0; index < ShortestPathList.size() - 1; index++)
+		{
+			ShortestDistance += ShortestPathList.get(index).GetDistance(ShortestPathList.get(index + 1));
+		}
+		
 		ShowShortestPath = true;
 	}
 	
 	public void GetMST()
 	{
+		MSTList.clear();
+		MSTCost = 0;
+		
 		Prim prim = new Prim(IntersectionPointList);
 		MSTList = prim.GetMST();
+		
+		for (Road road : MSTList)
+		{
+			MSTCost += road.getPoint1().GetDistance(road.getPoint2());
+		}
+		
 		ShowMST = true;
 	}
 }
