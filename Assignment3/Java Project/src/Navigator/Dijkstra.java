@@ -50,12 +50,10 @@ public class Dijkstra
 	{
 		boolean[] hasVisited = new boolean[IntersectionPointList.size()];
 		double[] distance = new double[IntersectionPointList.size()];
-//		Point[] path = new Point[IntersectionPointList.size()];
 		int[] path = new int[IntersectionPointList.size()];
 		
 		Arrays.fill(hasVisited, false);
 		Arrays.fill(distance, Double.MAX_VALUE);
-//		Arrays.fill(path, null);
 		Arrays.fill(path, -1);
 		
 		int startIntersectionIndex, endIntersectionIndex;
@@ -80,7 +78,6 @@ public class Dijkstra
 		}
 		
 		distance[startIntersectionIndex] = 0;
-//		hasVisited[startIntersectionIndex] = true;
 		
 		double bestDistance;
 		int bestWay = 0;
@@ -109,7 +106,6 @@ public class Dijkstra
 					if (distance[j] > distance[bestWay] + IntersectionTable[bestWay][j])
 					{
 						distance[j] = distance[bestWay] + IntersectionTable[bestWay][j];
-//						path[j] = IntersectionPointList.get(bestWay);
 						path[j] = bestWay;
 					}
 				}
