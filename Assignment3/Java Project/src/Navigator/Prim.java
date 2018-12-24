@@ -1,9 +1,7 @@
 package Navigator;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Deque;
 
 public class Prim
 {
@@ -58,64 +56,65 @@ public class Prim
 	public ArrayList<Road> GetMST()
 	{
 		boolean[] hasVisited = new boolean[IntersectionPointList.size()];
-		Deque<Integer> queue = new ArrayDeque<>();
-		ArrayList<Road> roadList = new ArrayList<>();
 		ArrayList<PrimLink> linkList = new ArrayList<>();
+		ArrayList<Road> roadList = new ArrayList<>();
 		
 		Arrays.fill(hasVisited, false);
-		
-		final int startIndex = 0;
-		queue.add(startIndex);
-		
-		
-		int currentIntersection = 0;
-		
-		double bestDistance;
-		int bestWay = -1;
-		
-		hasVisited[startIndex] = true;
-		while (currentIntersection != -1)
-		{
-			for (int index = 0; index < IntersectionPointList.size(); index++)
-			{
-				if (IntersectionTable[currentIntersection][index] != Double.MAX_VALUE)
-				{
-					AddPrimLinkToList(linkList, new PrimLink(currentIntersection, index, IntersectionTable[currentIntersection][index]));
-				}
-			}
-			
-			bestDistance = Double.MAX_VALUE;
-			for (int index = 0; index < linkList.size(); index++)
-			{
-				if (hasVisited[linkList.get(currentIntersection).getDestination(currentIntersection)] == false && 
-					linkList.get(index).getDistance() < bestDistance)
-				{
-					bestDistance = linkList.get(index).getDistance();
-					bestWay = linkList.get(index).getDestination(currentIntersection);
-				}
-			}
-		}
-		
-		while (queue.isEmpty() == false)
-		{
-			currentIntersection = queue.poll();
-			
-			bestDistance = Double.MAX_VALUE;
-			for (int i = 0; i < IntersectionPointList.size(); i++)
-			{
-				if (hasVisited[i] == false && IntersectionTable[currentIntersection][i] < bestDistance)
-				{
-					bestDistance = IntersectionTable[currentIntersection][i]; 
-					bestWay = i;
-				}
-			}
-			
-			if (bestWay != -1)
-			{
-				hasVisited[bestWay] = true;
-				queue.add(bestWay);	
 				
-				roadList.add(new Road(IntersectionPointList.get(currentIntersection), IntersectionPointList.get(bestWay)));
+		int currentIndex = 0;
+		double bestDistance;
+		PrimLink bestLink = null;
+		
+		
+		for (int startIndex = 0; startIndex < IntersectionPointList.size(); startIndex++)
+		{
+			if (hasVisited[startIndex])
+			{
+				continue;
+			}
+			
+			hasVisited[startIndex] = true;
+			currentIndex = startIndex;
+			
+			while (currentIndex != -1)
+			{
+				for (int index = 0; index < IntersectionPointList.size(); index++)
+				{
+					if (hasVisited[index] == false && IntersectionTable[currentIndex][index] != Double.MAX_VALUE && currentIndex != index)
+					{
+						AddPrimLinkToList(linkList, new PrimLink(currentIndex, index, IntersectionTable[currentIndex][index]));
+					}
+				}
+				
+				bestDistance = Double.MAX_VALUE;
+				bestLink = null;
+				currentIndex = -1;
+				
+				for (int i = 0; i < hasVisited.length; i++)
+				{
+					if (hasVisited[i] == false)
+					{
+						continue;
+					}
+					
+					for (int j = 0; j < linkList.size(); j++)
+					{
+						if (hasVisited[linkList.get(j).getDestination(i)] == false && 
+						linkList.get(j).getDistance() < bestDistance)
+						{
+							bestLink = linkList.get(j);
+							bestDistance = bestLink.getDistance();
+							currentIndex = bestLink.getDestination(i);
+						}
+					}
+				}
+				
+				if (bestLink != null)
+				{
+					hasVisited[currentIndex] = true;
+					roadList.add(new Road(IntersectionPointList.get(bestLink.NodeA), IntersectionPointList.get(bestLink.NodeB)));
+					linkList.remove(bestLink);
+				}
 			}
 		}
 		
